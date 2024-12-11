@@ -1,0 +1,21 @@
+# Load the required library
+library(rpart)
+
+# Sample Data: Sales vs Time
+time <- c(1, 2, 3, 4, 5)
+sales <- c(50, 60, 75, 95, 120)  # Quadratic growth
+data <- data.frame(time, sales)
+
+# Fit a decision tree model with adjusted control parameters
+tree_model <- rpart(sales ~ time, data = data, control = rpart.control(minsplit = 2))
+
+# Plot the decision tree
+plot(tree_model)
+text(tree_model, use.n = TRUE)
+
+# Predict using the decision tree
+predicted_sales <- predict(tree_model, newdata = data)
+
+# Plot actual vs predicted sales
+plot(time, sales, main="Decision Tree Regression", xlab="Time", ylab="Sales", pch=16)
+lines(time, predicted_sales, col="red", lwd=2)
